@@ -3,6 +3,7 @@
 # It should be run by config/default
 resources:
 - bases/app.example.org_clusters.yaml
+- bases/app.example.org_clustersets.yaml
 #+kubebuilder:scaffold:crdkustomizeresource
 
 patches:

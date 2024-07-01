@@ -1,0 +1,27 @@
+# permissions for end users to view clustersets.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: clusterrole
+    app.kubernetes.io/instance: clusterset-viewer-role
+    app.kubernetes.io/component: rbac
+    app.kubernetes.io/created-by: multi-cluster
+    app.kubernetes.io/part-of: multi-cluster
+    app.kubernetes.io/managed-by: kustomize
+  name: clusterset-viewer-role
+rules:
+- apiGroups:
+  - app.example.org
+  resources:
+  - clustersets
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - app.example.org
+  resources:
+  - clustersets/status
+  verbs:
+  - get

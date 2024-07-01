@@ -31,9 +31,9 @@ rules:
   - patch
   - update
 - apiGroups:
-  - example.example.org
+  - app.example.org
   resources:
-  - clusters
+  - clustersets
   verbs:
   - create
   - delete
@@ -43,15 +43,15 @@ rules:
   - update
   - watch
 - apiGroups:
-  - example.example.org
+  - app.example.org
   resources:
-  - clusters/finalizers
+  - clustersets/finalizers
   verbs:
   - update
 - apiGroups:
-  - example.example.org
+  - app.example.org
   resources:
-  - clusters/status
+  - clustersets/status
   verbs:
   - get
   - patch

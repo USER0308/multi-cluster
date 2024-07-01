@@ -23,40 +23,37 @@ import (
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
-// ClusterSpec defines the desired state of Cluster
-type ClusterSpec struct {
-	Version    string `json:"version"`
-	CNI        string `json:"CNI"`
-	MasterSize int    `json:"masterSize"`
-	WorkerSize int    `json:"workerSize"`
+// ClusterSetSpec defines the desired state of ClusterSet
+type ClusterSetSpec struct {
+	ClusterSize int `json:"clusterSize"`
 }
 
-// ClusterStatus defines the observed state of Cluster
-type ClusterStatus struct {
+// ClusterSetStatus defines the observed state of ClusterSet
+type ClusterSetStatus struct {
 }
 
-// +genclient
+//+genclient
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
 
-// Cluster is the Schema for the clusters API
-type Cluster struct {
+// ClusterSet is the Schema for the clustersets API
+type ClusterSet struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec   ClusterSpec   `json:"spec,omitempty"`
-	Status ClusterStatus `json:"status,omitempty"`
+	Spec   ClusterSetSpec   `json:"spec,omitempty"`
+	Status ClusterSetStatus `json:"status,omitempty"`
 }
 
 //+kubebuilder:object:root=true
 
-// ClusterList contains a list of Cluster
-type ClusterList struct {
+// ClusterSetList contains a list of ClusterSet
+type ClusterSetList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []Cluster `json:"items"`
+	Items           []ClusterSet `json:"items"`
 }
 
 func init() {
-	SchemeBuilder.Register(&Cluster{}, &ClusterList{})
+	SchemeBuilder.Register(&ClusterSet{}, &ClusterSetList{})
 }

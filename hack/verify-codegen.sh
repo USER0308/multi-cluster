@@ -4,8 +4,8 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-OUTPUT_PKG=generated/example
-MODULE=example.org/multi-clusters/example
+OUTPUT_PKG=core-api/app
+MODULE=example.org/example.org/multi-clusters
 
 SCRIPT_ROOT=$(dirname "${BASH_SOURCE[0]}")/..
 

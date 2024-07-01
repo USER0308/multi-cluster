@@ -32,6 +32,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
 	appv1 "example.org/multi-clusters/api/app/v1"
+	appcontroller "example.org/multi-clusters/internal/controller/app"
 	controller "example.org/multi-clusters/internal/controller/app"
 	//+kubebuilder:scaffold:imports
 )
@@ -93,6 +94,13 @@ func main() {
 		Scheme: mgr.GetScheme(),
 	}).SetupWithManager(mgr); err != nil {
 		setupLog.Error(err, "unable to create controller", "controller", "Cluster")
+		os.Exit(1)
+	}
+	if err = (&appcontroller.ClusterSetReconciler{
+		Client: mgr.GetClient(),
+		Scheme: mgr.GetScheme(),
+	}).SetupWithManager(mgr); err != nil {
+		setupLog.Error(err, "unable to create controller", "controller", "ClusterSet")
 		os.Exit(1)
 	}
 	//+kubebuilder:scaffold:builder

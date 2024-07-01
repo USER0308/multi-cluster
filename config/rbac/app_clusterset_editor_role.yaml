@@ -1,0 +1,31 @@
+# permissions for end users to edit clustersets.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: clusterrole
+    app.kubernetes.io/instance: clusterset-editor-role
+    app.kubernetes.io/component: rbac
+    app.kubernetes.io/created-by: multi-cluster
+    app.kubernetes.io/part-of: multi-cluster
+    app.kubernetes.io/managed-by: kustomize
+  name: clusterset-editor-role
+rules:
+- apiGroups:
+  - app.example.org
+  resources:
+  - clustersets
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - app.example.org
+  resources:
+  - clustersets/status
+  verbs:
+  - get
