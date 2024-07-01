@@ -31,8 +31,8 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/healthz"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
-	examplev1 "example.org/multi-clusters/api/v1"
-	"example.org/multi-clusters/internal/controller"
+	appv1 "example.org/multi-clusters/api/app/v1"
+	controller "example.org/multi-clusters/internal/controller/app"
 	//+kubebuilder:scaffold:imports
 )
 
@@ -44,7 +44,7 @@ var (
 func init() {
 	utilruntime.Must(clientgoscheme.AddToScheme(scheme))
 
-	utilruntime.Must(examplev1.AddToScheme(scheme))
+	utilruntime.Must(appv1.AddToScheme(scheme))
 	//+kubebuilder:scaffold:scheme
 }
 
@@ -88,7 +88,6 @@ func main() {
 		setupLog.Error(err, "unable to start manager")
 		os.Exit(1)
 	}
-
 	if err = (&controller.ClusterReconciler{
 		Client: mgr.GetClient(),
 		Scheme: mgr.GetScheme(),

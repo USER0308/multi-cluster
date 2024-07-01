@@ -5,6 +5,32 @@ metadata:
   name: manager-role
 rules:
 - apiGroups:
+  - app.example.org
+  resources:
+  - clusters
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - app.example.org
+  resources:
+  - clusters/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - app.example.org
+  resources:
+  - clusters/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
   - example.example.org
   resources:
   - clusters

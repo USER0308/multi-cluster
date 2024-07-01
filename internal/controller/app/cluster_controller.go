@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package controller
+package app
 
 import (
 	"context"
@@ -24,7 +24,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/log"
 
-	examplev1 "example.org/multi-clusters/api/v1"
+	appv1 "example.org/multi-clusters/api/app/v1"
 )
 
 // ClusterReconciler reconciles a Cluster object
@@ -33,9 +33,9 @@ type ClusterReconciler struct {
 	Scheme *runtime.Scheme
 }
 
-//+kubebuilder:rbac:groups=example.example.org,resources=clusters,verbs=get;list;watch;create;update;patch;delete
-//+kubebuilder:rbac:groups=example.example.org,resources=clusters/status,verbs=get;update;patch
-//+kubebuilder:rbac:groups=example.example.org,resources=clusters/finalizers,verbs=update
+//+kubebuilder:rbac:groups=app.example.org,resources=clusters,verbs=get;list;watch;create;update;patch;delete
+//+kubebuilder:rbac:groups=app.example.org,resources=clusters/status,verbs=get;update;patch
+//+kubebuilder:rbac:groups=app.example.org,resources=clusters/finalizers,verbs=update
 
 // Reconcile is part of the main kubernetes reconciliation loop which aims to
 // move the current state of the cluster closer to the desired state.
@@ -57,6 +57,6 @@ func (r *ClusterReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ct
 // SetupWithManager sets up the controller with the Manager.
 func (r *ClusterReconciler) SetupWithManager(mgr ctrl.Manager) error {
 	return ctrl.NewControllerManagedBy(mgr).
-		For(&examplev1.Cluster{}).
+		For(&appv1.Cluster{}).
 		Complete(r)
 }

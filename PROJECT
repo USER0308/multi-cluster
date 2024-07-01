@@ -5,6 +5,7 @@
 domain: example.org
 layout:
 - go.kubebuilder.io/v4
+multigroup: true
 projectName: multi-cluster
 repo: example.org/multi-clusters
 resources:
@@ -13,8 +14,8 @@ resources:
     namespaced: true
   controller: true
   domain: example.org
-  group: example
+  group: app
   kind: Cluster
-  path: example.org/multi-clusters/api/v1
+  path: example.org/multi-clusters/api/app/v1
   version: v1
 version: "3"

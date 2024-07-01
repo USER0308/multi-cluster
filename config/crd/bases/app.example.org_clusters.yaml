@@ -4,9 +4,9 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.12.0
-  name: clusters.example.example.org
+  name: clusters.app.example.org
 spec:
-  group: example.example.org
+  group: app.example.org
   names:
     kind: Cluster
     listKind: ClusterList

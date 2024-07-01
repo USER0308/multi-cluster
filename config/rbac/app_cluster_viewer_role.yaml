@@ -1,30 +1,26 @@
-# permissions for end users to edit clusters.
+# permissions for end users to view clusters.
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   labels:
     app.kubernetes.io/name: clusterrole
-    app.kubernetes.io/instance: cluster-editor-role
+    app.kubernetes.io/instance: cluster-viewer-role
     app.kubernetes.io/component: rbac
     app.kubernetes.io/created-by: multi-cluster
     app.kubernetes.io/part-of: multi-cluster
     app.kubernetes.io/managed-by: kustomize
-  name: cluster-editor-role
+  name: cluster-viewer-role
 rules:
 - apiGroups:
-  - example.example.org
+  - app.example.org
   resources:
   - clusters
   verbs:
-  - create
-  - delete
   - get
   - list
-  - patch
-  - update
   - watch
 - apiGroups:
-  - example.example.org
+  - app.example.org
   resources:
   - clusters/status
   verbs:

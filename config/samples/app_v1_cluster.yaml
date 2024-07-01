@@ -1,4 +1,4 @@
-apiVersion: example.example.org/v1
+apiVersion: app.example.org/v1
 kind: Cluster
 metadata:
   labels:
