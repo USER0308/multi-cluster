@@ -14,7 +14,20 @@ spec:
     singular: cluster
   scope: Namespaced
   versions:
-  - name: v1
+  - additionalPrinterColumns:
+    - jsonPath: .spec.version
+      name: VERSION
+      type: string
+    - jsonPath: .spec.CNI
+      name: CNI
+      type: string
+    - jsonPath: .spec.masterSize
+      name: MASTER
+      type: integer
+    - jsonPath: .spec.workerSize
+      name: WORK
+      type: integer
+    name: v1
     schema:
       openAPIV3Schema:
         description: Cluster is the Schema for the clusters API
@@ -35,6 +48,13 @@ spec:
             description: ClusterSpec defines the desired state of Cluster
             properties:
               CNI:
+                enum:
+                - Calico
+                - Kindnet
+                - Flannel
+                - Canel
+                - Wave
+                - Cilium
                 type: string
               masterSize:
                 type: integer

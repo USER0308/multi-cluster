@@ -25,7 +25,8 @@ import (
 
 // ClusterSpec defines the desired state of Cluster
 type ClusterSpec struct {
-	Version    string `json:"version"`
+	Version string `json:"version"`
+	// +kubebuilder:validation:Enum=Calico;Kindnet;Flannel;Canel;Wave;Cilium
 	CNI        string `json:"CNI"`
 	MasterSize int    `json:"masterSize"`
 	WorkerSize int    `json:"workerSize"`
@@ -38,6 +39,10 @@ type ClusterStatus struct {
 // +genclient
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
+// +kubebuilder:printcolumn:JSONPath=".spec.version",name=VERSION,type=string
+// +kubebuilder:printcolumn:JSONPath=".spec.CNI",name=CNI,type=string
+// +kubebuilder:printcolumn:JSONPath=".spec.masterSize",name=MASTER,type=integer
+// +kubebuilder:printcolumn:JSONPath=".spec.workerSize",name=WORK,type=integer
 
 // Cluster is the Schema for the clusters API
 type Cluster struct {
