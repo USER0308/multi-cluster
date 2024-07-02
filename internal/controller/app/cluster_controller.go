@@ -18,9 +18,11 @@ package app
 
 import (
 	"context"
+	"errors"
 	appv1 "example.org/multi-clusters/api/app/v1"
+	"example.org/multi-clusters/common"
+	"example.org/multi-clusters/pkg/provider"
 	"github.com/go-logr/logr"
-	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/client-go/tools/record"
 	ctrl "sigs.k8s.io/controller-runtime"
@@ -82,7 +84,24 @@ func (r *ClusterReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ct
 			logger.Error(err, "add finalizer fail")
 		}
 	}
-
+	clusterProvider := provider.GetClusterProvider("Kind")
+	c, err := clusterProvider.GetCluster(cluster.Name)
+	if err != nil {
+		if !errors.Is(err, common.ClusterNotFoundError) {
+			logger.Error(err, "Get cluster error")
+			return ctrl.Result{}, err
+		}
+		// not found, need to create one
+		err = clusterProvider.CreateCluster(cluster)
+		if err != nil {
+			// 清理残留资源？更新condition？
+			logger.Error(err, "Create cluster error")
+			return ctrl.Result{}, err
+		}
+	}
+	// 获取c中的集群健康、节点等信息，和当前cluster比对，不一致时更新
+	// 节点ip不一致时更新kind集群，集群健康不一致时更新cr资源
+	inspect(cluster, c)
 	return ctrl.Result{}, nil
 }
 
@@ -93,9 +112,6 @@ func (r *ClusterReconciler) SetupWithManager(mgr ctrl.Manager) error {
 		Complete(r)
 }
 
-func addFinalizer(obj *v1.ObjectMeta) {
-	if obj.Finalizers == nil || len(obj.Finalizers) == 0 {
-		finalizer := []string{"operator-controller"}
-		obj.Finalizers = finalizer
-	}
+func inspect(cluster *appv1.Cluster, c interface{}) {
+
 }

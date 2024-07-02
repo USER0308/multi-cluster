@@ -17,6 +17,7 @@ limitations under the License.
 package v1
 
 import (
+	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -32,8 +33,42 @@ type ClusterSpec struct {
 	WorkerSize int    `json:"workerSize"`
 }
 
+type Node struct {
+	HostName  string
+	IPAddress string
+}
+
+type MasterNode struct {
+	Node
+}
+
+type WorkerNode struct {
+	Node
+}
+
 // ClusterStatus defines the observed state of Cluster
 type ClusterStatus struct {
+	Phase     string             `json:"phase"`
+	Master    []MasterNode       `json:"master"`
+	Worker    []WorkerNode       `json:"worker"`
+	Condition []ClusterCondition `json:"condition"`
+}
+
+type ClusterConditionType string
+
+type ClusterCondition struct {
+	Type          ClusterConditionType   `json:"type"`
+	Status        corev1.ConditionStatus `json:"status"`
+	LastProbeTime metav1.Time            `json:"lastProbeTime,omitempty" protobuf:"bytes,3,opt,name=lastProbeTime"`
+	// Last time the condition transitioned from one status to another.
+	// +optional
+	LastTransitionTime metav1.Time `json:"lastTransitionTime,omitempty" protobuf:"bytes,4,opt,name=lastTransitionTime"`
+	// Unique, one-word, CamelCase reason for the condition's last transition.
+	// +optional
+	Reason string `json:"reason,omitempty" protobuf:"bytes,5,opt,name=reason"`
+	// Human-readable message indicating details about last transition.
+	// +optional
+	Message string `json:"message,omitempty" protobuf:"bytes,6,opt,name=message"`
 }
 
 // +genclient
