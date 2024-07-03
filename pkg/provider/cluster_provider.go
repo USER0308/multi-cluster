@@ -4,6 +4,7 @@ import (
 	appv1 "example.org/multi-clusters/api/app/v1"
 	"example.org/multi-clusters/common"
 	"example.org/multi-clusters/pkg/provider/kind"
+	"github.com/go-logr/logr"
 )
 
 type ClusterProvider interface {
@@ -16,10 +17,10 @@ type ClusterProvider interface {
 	StopCluster()
 }
 
-func GetClusterProvider(providerType common.ProviderType) ClusterProvider {
+func GetClusterProvider(logger logr.Logger, providerType common.ProviderType) ClusterProvider {
 	switch providerType {
 	case common.ProviderTypeKind:
-		return kind.NewKindProvider()
+		return kind.NewKindProvider(logger)
 	}
 	// not supported yet
 	return nil

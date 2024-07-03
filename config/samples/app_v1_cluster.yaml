@@ -9,6 +9,7 @@ metadata:
     app.kubernetes.io/created-by: multi-cluster
   name: cluster-sample
 spec:
+  provider: Kind
   version: v1.27.0
   CNI: Kindnet
   masterSize: 3
