@@ -2,7 +2,6 @@ package kind
 
 import (
 	appv1 "example.org/multi-clusters/api/app/v1"
-	"example.org/multi-clusters/pkg/provider"
 )
 
 type Kind struct {
@@ -12,7 +11,7 @@ type Kind struct {
 	Password string
 }
 
-func NewKindProvider() provider.ClusterProvider {
+func NewKindProvider() *Kind {
 	return &Kind{}
 }
 

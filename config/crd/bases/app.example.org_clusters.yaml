@@ -70,6 +70,76 @@ spec:
             type: object
           status:
             description: ClusterStatus defines the observed state of Cluster
+            properties:
+              condition:
+                items:
+                  properties:
+                    lastProbeTime:
+                      format: date-time
+                      type: string
+                    lastTransitionTime:
+                      description: Last time the condition transitioned from one status
+                        to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: Human-readable message indicating details about
+                        last transition.
+                      type: string
+                    reason:
+                      description: Unique, one-word, CamelCase reason for the condition's
+                        last transition.
+                      type: string
+                    status:
+                      type: string
+                    type:
+                      type: string
+                  required:
+                  - status
+                  - type
+                  type: object
+                type: array
+              master:
+                items:
+                  properties:
+                    node:
+                      properties:
+                        IPAddress:
+                          type: string
+                        hostName:
+                          type: string
+                      required:
+                      - IPAddress
+                      - hostName
+                      type: object
+                  required:
+                  - node
+                  type: object
+                type: array
+              phase:
+                type: string
+              worker:
+                items:
+                  properties:
+                    node:
+                      properties:
+                        IPAddress:
+                          type: string
+                        hostName:
+                          type: string
+                      required:
+                      - IPAddress
+                      - hostName
+                      type: object
+                  required:
+                  - node
+                  type: object
+                type: array
+            required:
+            - condition
+            - master
+            - phase
+            - worker
             type: object
         type: object
     served: true

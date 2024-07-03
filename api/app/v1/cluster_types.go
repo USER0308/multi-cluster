@@ -34,16 +34,16 @@ type ClusterSpec struct {
 }
 
 type Node struct {
-	HostName  string
-	IPAddress string
+	HostName  string `json:"hostName"`
+	IPAddress string `json:"IPAddress"`
 }
 
 type MasterNode struct {
-	Node
+	Node `json:"node"`
 }
 
 type WorkerNode struct {
-	Node
+	Node `json:"node"`
 }
 
 // ClusterStatus defines the observed state of Cluster
