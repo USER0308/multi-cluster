@@ -2,6 +2,7 @@ package provider
 
 import (
 	appv1 "example.org/multi-clusters/api/app/v1"
+	"example.org/multi-clusters/common"
 	"example.org/multi-clusters/pkg/provider/kind"
 )
 
@@ -15,9 +16,9 @@ type ClusterProvider interface {
 	StopCluster()
 }
 
-func GetClusterProvider(providerType string) ClusterProvider {
+func GetClusterProvider(providerType common.ProviderType) ClusterProvider {
 	switch providerType {
-	case "Kind":
+	case common.ProviderTypeKind:
 		return kind.NewKindProvider()
 	}
 	// not supported yet

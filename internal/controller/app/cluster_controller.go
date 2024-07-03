@@ -84,7 +84,7 @@ func (r *ClusterReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ct
 			logger.Error(err, "add finalizer fail")
 		}
 	}
-	clusterProvider := provider.GetClusterProvider("Kind")
+	clusterProvider := provider.GetClusterProvider(cluster.Spec.Provider)
 	c, err := clusterProvider.GetCluster(cluster.Name)
 	if err != nil {
 		if !errors.Is(err, common.ClusterNotFoundError) {

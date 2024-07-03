@@ -17,6 +17,7 @@ limitations under the License.
 package v1
 
 import (
+	"example.org/multi-clusters/common"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
@@ -26,11 +27,13 @@ import (
 
 // ClusterSpec defines the desired state of Cluster
 type ClusterSpec struct {
-	Version string `json:"version"`
+	// +kubebuilder:validation:Enum=Kind
+	Provider common.ProviderType `json:"provider"`
+	Version  string              `json:"version"`
 	// +kubebuilder:validation:Enum=Calico;Kindnet;Flannel;Canel;Wave;Cilium
-	CNI        string `json:"CNI"`
-	MasterSize int    `json:"masterSize"`
-	WorkerSize int    `json:"workerSize"`
+	CNI        common.CNIType `json:"CNI"`
+	MasterSize int            `json:"masterSize"`
+	WorkerSize int            `json:"workerSize"`
 }
 
 type Node struct {

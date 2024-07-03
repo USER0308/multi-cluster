@@ -58,6 +58,10 @@ spec:
                 type: string
               masterSize:
                 type: integer
+              provider:
+                enum:
+                - Kind
+                type: string
               version:
                 type: string
               workerSize:
@@ -65,6 +69,7 @@ spec:
             required:
             - CNI
             - masterSize
+            - provider
             - version
             - workerSize
             type: object
