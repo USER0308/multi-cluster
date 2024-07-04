@@ -24,7 +24,20 @@ func NewKindProvider(logger logr.Logger) *Kind {
 	}
 }
 
-func (k *Kind) ListClusters() {}
+func (k *Kind) ListClusters() ([]string, error) {
+	output, err := RunKindCommand("get", "clusters")
+	if err != nil {
+		k.Log.Error(err, output)
+		if errors.Is(err, exec.ErrNotFound) {
+			// command not found
+			return nil, err
+		}
+		// other error
+		return nil, err
+	}
+	clusterList := strings.Split(strings.TrimSpace(output), "\n")
+	return clusterList, nil
+}
 
 func (k *Kind) GetCluster(clusterName string) (interface{}, error) {
 	output, err := RunKindCommand("get", "clusters")
@@ -47,6 +60,16 @@ func (k *Kind) GetCluster(clusterName string) (interface{}, error) {
 }
 
 func (k *Kind) CreateCluster(cluster *appv1.Cluster) error {
+	output, err := RunKindCommand("create", "cluster", "--name ", cluster.Name)
+	if err != nil {
+		k.Log.Error(err, output)
+		if errors.Is(err, exec.ErrNotFound) {
+			// command not found
+			return err
+		}
+		// other error
+		return err
+	}
 	return nil
 }
 func (k *Kind) UpdateCluster() {}

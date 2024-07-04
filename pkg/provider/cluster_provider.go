@@ -8,7 +8,7 @@ import (
 )
 
 type ClusterProvider interface {
-	ListClusters()
+	ListClusters() ([]string, error)
 	GetCluster(clusterName string) (cluster interface{}, err error)
 	CreateCluster(cluster *appv1.Cluster) error
 	UpdateCluster()
